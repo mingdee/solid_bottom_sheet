@@ -106,6 +106,18 @@ class _SolidBottomSheetState extends State<SolidBottomSheet> {
         ((widget.controller!.height - data.delta.dy) < widget.maxHeight)) {
       isDragDirectionUp = data.delta.dy <= 0;
       widget.controller!.height -= data.delta.dy;
+      double heightDiff = widget.maxHeight - widget.minHeight;
+      if (isDragDirectionUp!) {
+        double heightDelta = widget.controller!.height - widget.minHeight;
+        if (heightDelta >= 0.20) {
+          _show();
+        }
+      } else {
+        double heightDelta = widget.maxHeight - widget.controller!.height;
+        if (heightDelta >= 0.20) {
+          _hide();
+        }
+      }
     }
   }
 
