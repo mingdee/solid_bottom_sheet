@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../solid_bottom_sheet.dart';
 import 'smoothness.dart';
@@ -109,12 +110,12 @@ class _SolidBottomSheetState extends State<SolidBottomSheet> {
       double heightDiff = widget.maxHeight - widget.minHeight;
       if (isDragDirectionUp!) {
         double heightDelta = widget.controller!.height - widget.minHeight;
-        if (heightDelta >= 0.20) {
+        if (heightDelta >= 5.0.h) {
           _show();
         }
       } else {
         double heightDelta = widget.maxHeight - widget.controller!.height;
-        if (heightDelta >= 0.20) {
+        if (heightDelta >= 5.0.h) {
           _hide();
         }
       }
@@ -153,24 +154,24 @@ class _SolidBottomSheetState extends State<SolidBottomSheet> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         GestureDetector(
           onVerticalDragUpdate:
               widget.canUserSwipe ? _onVerticalDragUpdate : null,
           onVerticalDragEnd: widget.autoSwiped ? _onVerticalDragEnd : null,
           onTap: widget.toggleVisibilityOnTap ? _onTap : null,
-          child: Container(
-            decoration: widget.elevation > 0
-                ? BoxDecoration(boxShadow: [
+          child: widget.elevation > 0.0
+              ? Container(
+                  decoration: BoxDecoration(boxShadow: [
                     BoxShadow(
                       color: Colors.black54,
                       blurRadius: widget.elevation,
                     ),
-                  ])
-                : null,
-            width: MediaQuery.of(context).size.width,
-            child: widget.headerBar,
-          ),
+                  ]),
+                  width: MediaQuery.of(context).size.width,
+                  child: widget.headerBar)
+              : widget.headerBar,
         ),
         StreamBuilder<double>(
           stream: widget.controller!.heightStream,
